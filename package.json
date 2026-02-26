@@ -1,7 +1,7 @@
 {
   "name": "node-Express-app",
   "version": "1.0.0",
-  "description": "This is a node project",
+  "description": "Thsi is a node project",
   "main": "index.js",
   "bin": "index.js",
   "scripts": {
@@ -17,6 +17,10 @@
   },
   "pkg": {
     "assets": ["index.html"],
-    "targets": ["node20-linux-x64", "node20-linux-arm64", "node20-win-x64"]
+    "targets": [
+      "node18-linux-x64",
+      "node18-linux-arm64",
+      "node18-win-x64"
+    ]
   }
 }
