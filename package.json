@@ -1,9 +1,9 @@
 {
   "name": "node-Express-app",
   "version": "1.0.0",
-  "description": "Thsi is a node project",
+  "description": "This is a node project",
   "main": "index.js",
-  "bin": "index.js",
+  "bin": "index.js",                     // 添加 bin 字段
   "scripts": {
     "start": "node index.js"
   },
@@ -16,11 +16,7 @@
     "node": ">=18.0.0"
   },
   "pkg": {
-    "assets": ["index.html"],
-    "targets": [
-      "node18-linux-x64",
-      "node18-linux-arm64",
-      "node18-win-x64"
-    ]
+    "assets": ["index.html"],             // 确保 index.html 被打包
+    "targets": ["node20-linux-x64", "node20-linux-arm64", "node20-win-x64"]
   }
 }
