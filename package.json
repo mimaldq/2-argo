@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Thsi is a node project",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "start": "node index.js"
   },
