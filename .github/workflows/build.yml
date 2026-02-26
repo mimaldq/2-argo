@@ -1,40 +1,35 @@
-name: Build Binary
+name: Build Multi-Platform Binary
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:  # 仅手动触发
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         target:
-          - node18-linux-x64
-          - node18-linux-arm64
-          - node18-win-x64
+          - node20-linux-x64
+          - node20-linux-arm64
+          # 如需 macOS，可添加 node20-macos-x64
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install   # 使用 install 而非 ci，避免 lock 文件缺失
+        run: npm ci
 
       - name: Install pkg
         run: npm install -g pkg
 
       - name: Build binary for ${{ matrix.target }}
         run: |
-          pkg . --targets ${{ matrix.target }} --compress Brotli --debug --output myapp-${{ matrix.target }}
+          pkg . --targets ${{ matrix.target }} --compress Brotli --output myapp-${{ matrix.target }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
