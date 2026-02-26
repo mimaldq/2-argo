@@ -1,0 +1,17 @@
+{
+  "name": "node-Express-app",
+  "version": "1.0.0",
+  "description": "Thsi is a node project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.7.2",
+    "http-proxy": "^1.18.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
