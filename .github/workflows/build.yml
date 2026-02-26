@@ -1,0 +1,43 @@
+name: Build Binary
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - node18-linux-x64
+          - node18-linux-arm64
+          - node18-win-x64
+          # 如需 macOS: node18-macos-x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install pkg
+        run: npm install -g pkg
+
+      - name: Build binary for ${{ matrix.target }}
+        run: |
+          pkg . --targets ${{ matrix.target }} --compress Brotli --output myapp-${{ matrix.target }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: myapp-${{ matrix.target }}
+          path: myapp-${{ matrix.target }}*
