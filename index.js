@@ -480,9 +480,8 @@ trojan://${UUID}@${CFIP}:${CFPORT}?security=tls&sni=${argoDomain}&fp=firefox&typ
         res.send(encodedContent);
       });
       resolve(subTxt);
-      }, 2000);
-    });
-  }
+    }, 2000);
+  });
 }
 
 // 自动上传节点或订阅
