@@ -756,26 +756,34 @@ async function extractDomains() {
   }
 }
 
+// ========== 修改后的 getMetaInfo 函数 ==========
 // 获取isp信息
 async function getMetaInfo() {
   try {
-    const response1 = await axios.get('https://ipapi.co/json/', { timeout: 3000 });
-    if (response1.data && response1.data.country_code && response1.data.org) {
-      return `${response1.data.country_code}_${response1.data.org}`;
+    const response1 = await axios.get('https://api.ip.sb/geoip', { 
+      headers: { 'User-Agent': 'Mozilla/5.0' }, 
+      timeout: 3000 
+    });
+    if (response1.data && response1.data.country_code && response1.data.isp) {
+      return `${response1.data.country_code}-${response1.data.isp}`.replace(/\s+/g, '_');
     }
   } catch (error) {
-      try {
-        // 备用 ip-api.com 获取isp
-        const response2 = await axios.get('http://ip-api.com/json/', { timeout: 3000 });
-        if (response2.data && response2.data.status === 'success' && response2.data.countryCode && response2.data.org) {
-          return `${response2.data.countryCode}_${response2.data.org}`;
-        }
-      } catch (error) {
-        // 忽略错误
+    try {
+      // 备用 ip-api.com 获取isp
+      const response2 = await axios.get('http://ip-api.com/json', { 
+        headers: { 'User-Agent': 'Mozilla/5.0' }, 
+        timeout: 3000 
+      });
+      if (response2.data && response2.data.status === 'success' && response2.data.countryCode && response2.data.org) {
+        return `${response2.data.countryCode}-${response2.data.org}`.replace(/\s+/g, '_');
       }
+    } catch (error) {
+      // 备用 API 也失败，静默处理
+    }
   }
   return 'Unknown';
 }
+// ========== 修改结束 ==========
 
 // 生成 list 和 sub 信息
 async function generateLinks(argoDomain) {
